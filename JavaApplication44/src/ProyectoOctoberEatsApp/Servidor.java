@@ -9,5 +9,13 @@ package ProyectoOctoberEatsApp;
  * @author Maik
  */
 public class Servidor {
+    private BaseDatosClientes baseDatosClientes;
     
+    public Servidor(BaseDatosClientes baseDatosClientes) {
+        this.baseDatosClientes = baseDatosClientes;
+    }
+    
+    public boolean autenticarUsuario(String correoElectronico, String contrasena) {
+        return baseDatosClientes.autenticarUsuario(correoElectronico, contrasena);
+    }
 }
