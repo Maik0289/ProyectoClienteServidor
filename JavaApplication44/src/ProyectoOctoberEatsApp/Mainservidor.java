@@ -37,7 +37,29 @@ public class Mainservidor {
             
             //recibiendo clientes
             
-            cliente = Mservidor.accept();
+            Mcliente = Mservidor.accept();
+            
+            System.out.println("Se conectro un cliente ...");
+            
+            //Atender al cliente : preguntarf que necesita?
+            
+           entrada = new DataInputStream(Mcliente.getInputStream());
+           
+           salida = new DataOutputStream(Mcliente.getOutputStream());
+           
+           //prepararnos la respuesta del cliente y establecer el espacio de comunicacion
+           String mensajeEnviado ="";
+           while(!mensajeEnviado.equals("SALIR"))
+           {
+               //me voya comunicar con el cliente , siempre y cuasnod no se escriba la palabra salir
+               mensajeRecibido = entrada.readUTF();
+               System.out.println("Mensaje del cliente :  " + mensajeRecibido);
+               System.out.println();
+               System.out.println("Digite una respuesta para el cliente");
+               mensajeEnviado = lectura.nextLine();
+               
+               salida.writeUTF(mensajeEnviado);
+           }
             
         }
         catch(IOException error)
