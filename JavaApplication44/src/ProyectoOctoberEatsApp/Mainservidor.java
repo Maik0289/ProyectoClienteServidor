@@ -69,4 +69,8 @@ public class Mainservidor {
     }
     
 }
-
+public void iniciarConexion(){
+try{
+String mensajeEnviado
+}
+}
