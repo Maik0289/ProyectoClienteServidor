@@ -4,17 +4,19 @@
  */
 package ProyectoOctoberEatsApp;
 
-
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.*; 
 import java.util.Scanner;
 import java.net.*;
 import javax.swing.JOptionPane;
+import java.io.IOException;
 /**
  *
  * @author 50664
  */
 public class Mainservidor {
-     private static final String HOST = "localhost";
+    private static final String HOST = "localhost";
     private static final int PUERTO = 5000;
     
     private ServerSocket Mservidor;
@@ -49,28 +51,76 @@ public class Mainservidor {
            
            //prepararnos la respuesta del cliente y establecer el espacio de comunicacion
            String mensajeEnviado ="";
-           while(!mensajeEnviado.equals("SALIR"))
-           {
-               //me voya comunicar con el cliente , siempre y cuasnod no se escriba la palabra salir
-               mensajeRecibido = entrada.readUTF();
-               System.out.println("Mensaje del cliente :  " + mensajeRecibido);
-               System.out.println();
-               System.out.println("Digite una respuesta para el cliente");
-               mensajeEnviado = lectura.nextLine();
+           while(!mensajeEnviado.equals("SALIR")){
                
-               salida.writeUTF(mensajeEnviado);
+               mostrarMenu();
+               
+               
+               int opcion = entrada.readInt();
+               
+               switch (opcion){
+                   case 1:
+                       mensajeEnviado = "Menu";
+                       break;
+                   case 2:
+                       mensajeEnviado = "Menu";
+                       break;
+                   case 3:
+                       mensajeEnviado = "Menu";
+                       break;
+                   case 4:
+                       mensajeEnviado = "Menu";
+                       break;
+                   case 5:
+                       mensajeEnviado = "Menu";
+                       break;
+                   case 6:
+                       mensajeEnviado = "Menu";
+                       break;
+                   case 7:
+                       mensajeEnviado = "SALIR";
+                       break;
+                   default:
+                       mensajeEnviado = "Opcion no valida, intente de nuevo ";
+                       break;
+               }
+               
+                
+                cerrarConexion();
+                
            }
-            
+        }catch(IOException error){
+            JOptionPane.showMessageDialog(null,"Se preseneto un  error" + error);
+           
         }
-        catch(IOException error)
-        {
-            JOptionPane.showMessageDialog(null, "Se presento un error " + error);
-        }
-    }
-    
+}   
+private void mostrarMenu(){
+    System.out.println("-----MENU-----");
+    System.out.println("-----MENU-----");
+    System.out.println("-----MENU-----");
+    System.out.println("-----MENU-----");
+    System.out.println("-----MENU-----");
+    System.out.println("-----MENU-----");
+    System.out.println("-----MENU-----");
 }
-public void iniciarConexion(){
-try{
-String mensajeEnviado
+         
+public void enviarMensaje(String mensaje){
+    try{
+        salida.writeUTF(mensaje);
+        
+    } catch (IOException e){
+      e.printStackTrace();
+    }
+}
+
+public void cerrarConexion(){
+   try{
+       Mcliente.close();
+       Mservidor.close();
+       entrada.close();
+       salida.close();
+   }catch(IOException e){
+       e.printStackTrace();
+   }
 }
 }
