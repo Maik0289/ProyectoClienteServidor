@@ -60,22 +60,22 @@ public class Mainservidor {
                
                switch (opcion){
                    case 1:
-                       mensajeEnviado = "Menu";
+                       mensajeEnviado = "1.VER_MENU";
                        break;
                    case 2:
-                       mensajeEnviado = "Menu";
+                       mensajeEnviado = "AGREGAR_PEDIDO";
                        break;
                    case 3:
-                       mensajeEnviado = "Menu";
+                       mensajeEnviado = "VER_MENU";
                        break;
                    case 4:
-                       mensajeEnviado = "Menu";
+                       mensajeEnviado = "VER_PEDIDO";
                        break;
                    case 5:
-                       mensajeEnviado = "Menu";
+                       mensajeEnviado = "VER_ITEMS";
                        break;
                    case 6:
-                       mensajeEnviado = "Menu";
+                       mensajeEnviado = "";
                        break;
                    case 7:
                        mensajeEnviado = "SALIR";
@@ -94,16 +94,77 @@ public class Mainservidor {
            
         }
 }   
-private void mostrarMenu(){
-    System.out.println("-----MENU-----");
-    System.out.println("-----MENU-----");
-    System.out.println("-----MENU-----");
-    System.out.println("-----MENU-----");
-    System.out.println("-----MENU-----");
-    System.out.println("-----MENU-----");
-    System.out.println("-----MENU-----");
+    
+public void agregarPedido(){
+    System.out.println("Imgreese su correo electronico para iniciar sesion :");
+    String correo = entrada.readUTF();
+    
+    Usuario usuario = BaseDatosClientes.obtenerUsuarioPorCorreo(correo);
+    
+    if (usuario != null){
+        Restaurante restaurantesElegido = obtenerRestaurante();
+        
+        List<MneuItem> itemSeleccionados = elegirItemsMenu(restaurantesElegido.getMenu());
+        pedido nuevoPedido = new Pedido(usario,restauranteElegido,false,itemsSeleccionados);
+        pedidos.add(nuevoPedido);
+        System.out.println("Pedido agregado con exito");
+        
+        
+    }else{
+        System.out.println("Usuario no encontrado . inicie sesion primero");
+    }
 }
+
+public void mostrarRestaurantesCercanos(){
+    
+    System.out.println("restaurantes cercanos: ");
+    for (Restaurante restaurante : restaurantesDisponibles){
+        System.out.println("_"+restaurante.getNombre()+"("+
+                restaurante.getUbicacion()+")");
+        
+        
+    }
+
+}
+private void mostrarMenu(){
+    System.out.println("1.Agregar pedido");
+    System.out.println("2.VER MENU");
+    System.out.println("3.Mostrar Restaurantes cercanos");
+    System.out.println("4.Ver_pedido");
+    System.out.println("5.Iniciar Sesion");
+    System.out.println("6. MENU items");
+    System.out.println("7.Salir");
+    System.out.println("SELECCIONE UNA OCPION");
+}
+public void verPedido(){
+    System.out.println("ingrese su correo electronico para ver su pedido:");
+    String correo = entrada.readUTF();
+    
+    Usario usario = BaseDatosCliente.obtenerUsuarioPorCorreo(correo);
+    
+    if (usuario !=null){
+        
+        pedido ultimoPedido = obtenerUltimoPedidoConfirmado(usario);
+        if (ultimoPedido != null){
+            System.out.println("Detalles del pedido");
+            System.out.println("Items :");
+            for (MenuItem item : ultimoPedido.getItems()){
+            System.out.println("_"+item.getNombre()+ ": $"+ item.getPrecio());
          
+            }
+        }
+        System.out.println("Costo totsl "+ calcularCostoTotalPedido(ultimoPedido));
+        
+        }else{
+        System.out.println("NO HAY PEDIDOS PENDIENTES PARA ESTE USARIO ");
+    }else{
+    System.out.println("usuario no encontroado inicie sesion primero ");
+        
+            }
+}
+           
+           
+
 public void enviarMensaje(String mensaje){
     try{
         salida.writeUTF(mensaje);
