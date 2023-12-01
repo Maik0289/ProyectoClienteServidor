@@ -96,24 +96,26 @@ public class Mainservidor {
 }   
     
 public void agregarPedido(){
-    System.out.println("Imgreese su correo electronico para iniciar sesion :");
-    String correo = entrada.readUTF();
-    
-    Usuario usuario = BaseDatosClientes.obtenerUsuarioPorCorreo(correo);
-    
-    if (usuario != null){
-        Restaurante restaurantesElegido = obtenerRestaurante();
-        
-        List<MneuItem> itemSeleccionados = elegirItemsMenu(restaurantesElegido.getMenu());
-        pedido nuevoPedido = new Pedido(usario,restauranteElegido,false,itemsSeleccionados);
+    try {
+        System.out.println("Ingrese su correo electrónico para iniciar sesión:");
+        String correo = entrada.readUTF();
+
+        Autenticacion autenticacion = new Autenticacion(baseDatosClientes);
+        Usuario usuario = autenticacion.obtenerUsuarioPorCorreo(correo);
+
+        if (usuario != null) {
+        Restaurante restauranteElegido = obtenerRestaurante();
+        List<MenuItem> itemsSeleccionados = elegirItemsMenu(restauranteElegido.getMenu());
+        Pedido nuevoPedido = new Pedido(usuario, restauranteElegido, false, itemsSeleccionados);
         pedidos.add(nuevoPedido);
-        System.out.println("Pedido agregado con exito");
-        
-        
-    }else{
-        System.out.println("Usuario no encontrado . inicie sesion primero");
+        System.out.println("Pedido agregado con éxito");
+            } else {
+                System.out.println("Usuario no encontrado. Inicie sesión primero");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
 
 public void mostrarRestaurantesCercanos(){
     
