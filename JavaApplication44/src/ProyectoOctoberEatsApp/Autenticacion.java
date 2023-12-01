@@ -16,7 +16,7 @@ public class Autenticacion {
     }
 
     public boolean autenticarUsuario(String correo, String contrasena) {
-        // Implementa la lógica de autenticación utilizando la base de datos
+        //Autenticación utilizando la base de datos
         Usuario usuario = baseDatosClientes.obtenerUsuarioPorCorreo(correo);
         return usuario != null && usuario.getContrasena().equals(contrasena);
     }
