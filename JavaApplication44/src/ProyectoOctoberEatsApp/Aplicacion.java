@@ -12,7 +12,8 @@ import java.util.List;
 public class Aplicacion {
     public static void main(String[] args) {
         BaseDatosClientes baseDatosClientes = new BaseDatosClientes();
-        Servidor servidor = new Servidor(baseDatosClientes);
+        Autenticacion autenticacion = new Autenticacion(baseDatosClientes);
+        Mainservidor servidor = new Mainservidor();
         
         MenuItem item1 = new MenuItem("pizza","pizza recomnedada",1500);
         MenuItem item2= new MenuItem("Lasagna","lasagna de pollo",5000);
@@ -33,16 +34,20 @@ public class Aplicacion {
         Restaurante restaurantePizza= new Restaurante("Pizzeria la esquina ","cartago centroe",menuRestaurante,true);
         
   
-        //Registroo de usuarios
+        // Registro de usuarios
         Usuario nuevoUsuario = new Usuario("Nombre", "Direccion", "correo@progra.com", "contrasena");
         baseDatosClientes.registrarUsuario(nuevoUsuario);
-        
-        //Autenticación de usuarios
+
+        // Autenticación de usuarios
         String correoElectronico = "correo@progra.com";
         String contrasena = "contrasena";
-        if (servidor.autenticarUsuario(correoElectronico, contrasena)) {
+        if (autenticacion.autenticarUsuario(correoElectronico, contrasena)) {
             System.out.println("Login exitoso");
-            //acceso a otras funciones    
+
+            // Agregar pedido después de la autenticación
+            servidor.agregarPedido();
+
+            // Acceso a otras funciones...
         } else {
             System.out.println("Credenciales incorrectas. Iniciar sesión fallida");
         }
